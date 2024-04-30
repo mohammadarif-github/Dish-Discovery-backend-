@@ -29,7 +29,12 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
+CRISPY_ALLOWED_TEMPLATE_PACK = "bootstrap5"
+CRISPY_TEMPLATE_PACK = "bootstrap5"
 
+X_FRAME_OPTIONS = 'SAMEORIGIN'
+
+XS_SHARING_ALLOWED_METHODS = ['POST','GET','OPTIONS', 'PUT', 'DELETE']
 # Application definition
 
 INSTALLED_APPS = [
@@ -118,11 +123,12 @@ USE_I18N = True
 
 USE_TZ = True
 
-CSRF_TRUSTED_ORIGINS = ['https://dish-discovery-backend.onrender.com', 'https://dish-discovery-backend.onrender.com']
+# CSRF_TRUSTED_ORIGINS = ['https://dish-discovery-backend.onrender.com', 'https://dish-discovery-backend.onrender.com']
 
 CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:5500",  # Add your frontend URL here
 ]
+CSRF_TRUSTED_ORIGINS = ['https://dish-discovery-backend.onrender.com','https://*.127.0.0.1']
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
