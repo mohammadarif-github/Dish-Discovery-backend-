@@ -25,6 +25,7 @@ review_router.register('',views.ReviewViewSet)
 
 urlpatterns = [
     path('contact_us/', include(contact_router.urls)),
+    path('do_contact/',views.doContact.as_view(),name="do_contact"),
     path('recipe/', include(recipe_router.urls)),
     path('register/', views.RegistrationApiView.as_view(),name="registration"),
     path('login/', views.LoginApiView.as_view(),name="login"),

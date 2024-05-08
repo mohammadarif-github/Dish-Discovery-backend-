@@ -7,6 +7,11 @@ class ContactUsSerializer(serializers.ModelSerializer):
         model = models.ContactUs
         fields = "__all__"
         
+class DoContactUsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.ContactUs
+        fields = "__all__"
+        
 class RecipeSerializer(serializers.ModelSerializer):
     class Meta :
         model = models.RecipeModel

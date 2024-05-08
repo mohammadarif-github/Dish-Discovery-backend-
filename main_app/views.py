@@ -19,6 +19,8 @@ class ContactUsViewset(viewsets.ModelViewSet):
     queryset = models.ContactUs.objects.all()
     serializer_class = serializers.ContactUsSerializer
 
+class doContact(generics.CreateAPIView):
+    serializer_class = serializers.ContactUsSerializer
 
 class RecipeViewset(viewsets.ModelViewSet):
     queryset = models.RecipeModel.objects.all()
