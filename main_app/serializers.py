@@ -12,6 +12,12 @@ class RecipeSerializer(serializers.ModelSerializer):
         model = models.RecipeModel
         fields = "__all__"
         
+        
+class RecipeCreateSerializer(serializers.ModelSerializer):
+    class Meta :
+        model = models.RecipeModel
+        fields = "__all__"
+
 class RegistrationSerializer(serializers.ModelSerializer):
     confirm_password = serializers.CharField(required = True)
     class Meta:
@@ -54,9 +60,17 @@ class UserSerializer(serializers.ModelSerializer):
         
         
 class ReviewSerializer(serializers.ModelSerializer):
-    class Meta :
+    reviewer_name = serializers.ReadOnlyField(source='user.first_name')
+    recipe_name = serializers.ReadOnlyField(source='recipe.name')
+
+    class Meta:
         model = models.Review
         fields = '__all__'
+        
+class CreateReviewSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Review
+        fields = ['id', 'reviewer_name', 'recipe_name', 'body', 'rating']
         
 class FavouriteSerializer(serializers.ModelSerializer):
     class Meta :

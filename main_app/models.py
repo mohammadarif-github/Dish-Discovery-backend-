@@ -17,7 +17,6 @@ class RecipeModel(models.Model):
         return self.name
     
     
-    
 class ContactUs(models.Model):
     name = models.CharField(max_length=50)
     phone = models.CharField(max_length=15)
@@ -54,5 +53,13 @@ class Review(models.Model):
     class Meta :
         unique_together = ['user','recipe']
         
+    @property
+    def reviewer_name(self):
+        return self.user.first_name  # Assuming 'username' is the field containing the user's name
+
+    @property
+    def recipe_name(self):
+        return self.recipe.name
+
     def __str__(self) -> str:
-        return f"Reviewer {self.user.first_name} ; Recipe {self.recipe.name}" 
+        return f"Reviewer {self.reviewer_name}; Recipe {self.recipe_name}"

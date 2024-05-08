@@ -2,10 +2,12 @@ from django.contrib import admin
 from .import models
 # Register your models here.
 
-
 class RecipeAdmin(admin.ModelAdmin):
-    list_display = ['name', 'added_by','slug','add_time', 'image']
+    list_display = ['name', 'added_by', 'slug', 'add_time', 'image']
     prepopulated_fields = {"slug": ("name",)}
+
+    def added_by(self,obj):
+        return obj.added_by.id
 
 class ContactUsAdmin(admin.ModelAdmin):
     list_display = ['name','phone','problem']

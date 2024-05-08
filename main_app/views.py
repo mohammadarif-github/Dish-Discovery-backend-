@@ -12,6 +12,8 @@ from rest_framework import generics, filters
 from django.utils.text import slugify
 from django.shortcuts import get_object_or_404
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.exceptions import ValidationError
 
 class ContactUsViewset(viewsets.ModelViewSet):
     queryset = models.ContactUs.objects.all()
@@ -21,6 +23,11 @@ class ContactUsViewset(viewsets.ModelViewSet):
 class RecipeViewset(viewsets.ModelViewSet):
     queryset = models.RecipeModel.objects.all()
     serializer_class = serializers.RecipeSerializer
+    
+class RecipeCreateView(generics.CreateAPIView):
+    serializer_class = serializers.RecipeCreateSerializer
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [TokenAuthentication]
 
 
 class RegistrationApiView(APIView):
@@ -67,18 +74,30 @@ class UserViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.UserSerializer
 
 
-
-
 class FavouriteViewSet(viewsets.ModelViewSet):
     queryset = models.Favourite.objects.all()
     serializer_class = serializers.FavouriteSerializer
 
 
-class giveReview(generics.CreateAPIView):
-    serializer_class = serializers.ReviewSerializer
-    permission_classes = ['IsAuthenticated']
-    
 
+class CreateReview(generics.CreateAPIView):
+    serializer_class = serializers.CreateReviewSerializer
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [TokenAuthentication]
+    
+    def get_queryset(self):
+        return models.Review.objects.all()
+    
+    def perform_create(self, serializer):
+        pk = self.kwargs.get('pk')
+        content = models.RecipeModel.objects.get(pk=pk)
+        reviewer = self.request.user
+        query = models.Review.objects.filter(user=reviewer,recipe=content)
+        if query.exists():
+            raise ValidationError("You've already given review for this recipe.")
+        
+        serializer.save(user=reviewer,recipe=content)
+    
 
 class ReviewViewSet(viewsets.ModelViewSet):
     queryset = models.Review.objects.all()

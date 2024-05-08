@@ -33,4 +33,6 @@ urlpatterns = [
     path("favourite/",include(favourite_router.urls)),
     path("review/",include(review_router.urls)),
     path("recipes/",views.RecipeFilter.as_view(),name="recipe_filter"),
+    path("recipes/create",views.RecipeCreateView.as_view(),name="create_recipe"),
+    path("reviews/<int:pk>/create",views.CreateReview.as_view(),name="create_review"),
 ]
